@@ -1,18 +1,17 @@
-const http = require("http");
+const express = require('express')
+const path = require('path')
+const app = express()
 
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>This is Home Page</h1>");
-    res.end();
-  } else if (req.url === "/about") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>This is About Page</h1>");
-    res.end();
-  } else {
-    res.writeHead(404, { "content-type": "text/html" });
-    res.write("<h1>404 not found</h1>");
-    res.end();
-  }
-});
-server.listen(5000);
+app.use(express.static('./Public'))
+
+app.get('/', (req, res)=>{
+  res.status(200).sendFile(path.resolve(__dirname, './navbar-app/index.html'))
+})
+
+app.all('*', (req, res)=>{
+  res.status(404).send('request not found.....')
+})
+
+app.listen(5000, ()=>{
+  console.log('Server is listening 5000......');
+})
