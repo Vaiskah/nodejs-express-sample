@@ -1,17 +1,17 @@
 const express = require('express')
-const path = require('path')
+
 const app = express()
 
-app.use(express.static('./Public'))
+const logger = require('./logger')
 
-app.get('/', (req, res)=>{
-  res.status(200).sendFile(path.resolve(__dirname, './navbar-app/index.html'))
+app.get('/', logger, (req, res)=>{
+  res.send('Home Page')
 })
 
-app.all('*', (req, res)=>{
-  res.status(404).send('request not found.....')
+app.get('/about', logger, (req, res)=>{
+  res.send('About Page')
 })
 
 app.listen(5000, ()=>{
-  console.log('Server is listening 5000......');
+  console.log('server is listening port 5000......');
 })
